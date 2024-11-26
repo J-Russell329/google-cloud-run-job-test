@@ -37,6 +37,10 @@ steps:
       - '--region=us-central1'
       - '--logging=CLOUD_LOGGING_ONLY'
 
+# Specify default logging option to CLOUD_LOGGING_ONLY
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 substitutions:
   _REGION: "us-central1"
 
