@@ -13,7 +13,7 @@ steps:
       - 'push'
       - 'gcr.io/$PROJECT_ID/google-cloud-run-job-test:$SHORT_SHA'
 
-  # Step 3: Deploy to Cloud Run Jobs
+  # Step 3: Create the Cloud Run job
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'beta'
@@ -23,7 +23,7 @@ steps:
       - 'my-job'
       - '--image=gcr.io/$PROJECT_ID/google-cloud-run-job-test:$SHORT_SHA'
       - '--region=us-central1'
-      - '--logging=CLOUD_LOGGING_ONLY'
+    # No logging argument here
 
   # Step 4: Update the job if it already exists
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -35,11 +35,6 @@ steps:
       - 'my-job'
       - '--image=gcr.io/$PROJECT_ID/google-cloud-run-job-test:$SHORT_SHA'
       - '--region=us-central1'
-      - '--logging=CLOUD_LOGGING_ONLY'
-
-# Specify default logging option to CLOUD_LOGGING_ONLY
-options:
-  logging: CLOUD_LOGGING_ONLY
 
 substitutions:
   _REGION: "us-central1"
