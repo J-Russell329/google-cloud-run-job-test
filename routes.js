@@ -9,7 +9,7 @@ async function taskB(args) {
   console.log(`Running Task B with args: ${args}`);
   // Simulate work
   await new Promise((resolve) => setTimeout(resolve, 2000));
-  console.log(`Task B completed!`);
+  console.log(`Task B completed! `);
 }
 
 async function taskC(args) {
