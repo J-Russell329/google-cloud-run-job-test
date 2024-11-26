@@ -24,8 +24,6 @@ steps:
       - '--image=gcr.io/$PROJECT_ID/google-cloud-run-job-test:$SHORT_SHA'
       - '--region=us-central1'
       - '--logging=CLOUD_LOGGING_ONLY'
-    # Ignore error if the job already exists
-    ignoreExitStatus: true
 
   # Step 4: Update the job if it already exists
   - name: 'gcr.io/cloud-builders/gcloud'
