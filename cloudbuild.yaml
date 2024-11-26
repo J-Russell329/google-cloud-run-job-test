@@ -1,0 +1,46 @@
+steps:
+  # Step 1: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/google-cloud-run-job-test:$SHORT_SHA'
+      - '.'
+
+  # Step 2: Push the image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/google-cloud-run-job-test:$SHORT_SHA'
+
+  # Step 3: Deploy to Cloud Run Jobs
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'beta'
+      - 'run'
+      - 'jobs'
+      - 'create'
+      - 'my-job'
+      - '--image=gcr.io/$PROJECT_ID/google-cloud-run-job-test:$SHORT_SHA'
+      - '--region=us-central1'
+      - '--logging=CLOUD_LOGGING_ONLY'
+    # Ignore error if the job already exists
+    ignoreExitStatus: true
+
+  # Step 4: Update the job if it already exists
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'beta'
+      - 'run'
+      - 'jobs'
+      - 'update'
+      - 'my-job'
+      - '--image=gcr.io/$PROJECT_ID/google-cloud-run-job-test:$SHORT_SHA'
+      - '--region=us-central1'
+      - '--logging=CLOUD_LOGGING_ONLY'
+
+substitutions:
+  _REGION: "us-central1"
+
+images:
+  - 'gcr.io/$PROJECT_ID/google-cloud-run-job-test:$SHORT_SHA'
