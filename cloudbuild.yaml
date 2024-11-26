@@ -36,6 +36,10 @@ steps:
       - '--image=gcr.io/$PROJECT_ID/google-cloud-run-job-test:$SHORT_SHA'
       - '--region=us-central1'
 
+# Specify default logging option to CLOUD_LOGGING_ONLY
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 substitutions:
   _REGION: "us-central1"
 
